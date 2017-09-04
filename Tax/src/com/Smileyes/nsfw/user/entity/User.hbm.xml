@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+	<class name="com.Smileyes.nsfw.user.entity.User">
+		<id name="id" column="id" length="40">
+			<generator class="org.hibernate.id.UUIDGenerator"></generator>
+		</id>
+		<property name="account" column="account" length="10"
+			type="java.lang.String" unique="true"></property>
+		<property name="name" column="name" length="10" type="java.lang.String"></property>
+		<property name="password" column="password" length="15"
+			type="java.lang.String"></property>
+		<property name="dept" column="dept" length="10" type="java.lang.String"></property>
+		<property name="headImg" column="headImg" length="100"
+			type="java.lang.String"></property>
+		<property name="gender" column="gender" type="java.lang.Boolean"></property>
+		<property name="state" column="state" length="2" type="java.lang.String"></property>
+		<property name="mobile" column="mobile" length="12" type="java.lang.String"></property>
+		<property name="memo" column="mome" length="200" type="java.lang.String"></property>
+		<property name="birthday" column="birthday" length="10"
+			type="java.util.Date"></property>
+		<property name="email" column="email" length="30" type="java.lang.String"></property>
+	</class>
+
+</hibernate-mapping>

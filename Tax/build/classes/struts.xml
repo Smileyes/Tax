@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<!-- 禁用动态访问 -->
+	<constant name="struts.enable.DynamicMethodInvocation" value="false"></constant>
+	<!-- 开发者模式 -->
+	<constant name="struts.devMode" value="true"></constant>
+	<!-- 扩展名强制为action -->
+	<constant name="sturts.action.extention" value="action"></constant>
+	<!-- 定义主题配置为simple -->
+	<constant name="struts.ui.theme" value="simple"></constant>
+	<!-- 导入各模块文件 -->
+	<include file="com/Smileyes/test/config/sturts-test.xml"></include>
+	<include file="com/Smileyes/nsfw/user/config/struts-user.xml"></include>
+</struts>
