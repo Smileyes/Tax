@@ -11,7 +11,47 @@
 	<constant name="sturts.action.extention" value="action"></constant>
 	<!-- 定义主题配置为simple -->
 	<constant name="struts.ui.theme" value="simple"></constant>
+
+
+	<!-- 全局异常配置 -->
+	<package name="base-default" extends="json-default" namespace="/">
+		<!-- 返回类型配置 -->
+		<result-types>
+			<result-type name="error" class="com.Smileyes.core.action.ResultTypeAction">
+			</result-type>
+		</result-types>
+		<!-- 全局返回结果 -->
+		<global-results>
+			<result name="success" type="json"/>
+			<result name="error" type="error"></result>
+			<result name="sysError">/WEB-INF/jsp/error.jsp</result>
+			<result name="input">/WEB-INF/jsp/error.jsp</result>
+		</global-results>
+		<!-- 全局异常映射 -->
+		<global-exception-mappings>
+			<exception-mapping result="sysError"
+				exception="com.Smileyes.core.exception.ActionException"></exception-mapping>
+			<exception-mapping result="input" exception="java.lang.Exception"></exception-mapping>
+		</global-exception-mappings>
+	</package>
 	<!-- 导入各模块文件 -->
-	<include file="com/Smileyes/test/config/sturts-test.xml"></include>
-	<include file="com/Smileyes/nsfw/user/config/struts-user.xml"></include>
+	<!-- test模块 -->
+	<include file="com/Smileyes/test/config/test-sturts.xml"></include>
+	<!-- 纳税服务：用户模块 -->
+	<include file="com/Smileyes/nsfw/user/config/user-struts.xml"></include>
+	<!-- 纳税服务：角色模块 -->
+	<include file="com/Smileyes/nsfw/role/config/role-struts.xml"></include>
+	<!-- 纳税服务：主页 -->
+	<include file="com/Smileyes/nsfw/home/config/home-struts.xml"></include>
+	<!-- 纳税服务：信息 -->
+	<include file="com/Smileyes/nsfw/info/config/info-struts.xml"></include>
+	<!-- 纳税服务：投诉 -->
+	<include file="com/Smileyes/nsfw/complain/config/complain-struts.xml"></include>
+
+
+	<!-- 系统主页 -->
+	<include file="com/Smileyes/home/config/home-struts.xml"></include>
+	<!-- 登录 -->
+	<include file="com/Smileyes/login/config/login-struts.xml"></include>
+
 </struts>

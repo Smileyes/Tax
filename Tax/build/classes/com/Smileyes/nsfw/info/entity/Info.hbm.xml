@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.Smileyes.nsfw.info.entity">
+	<class name="Info" table="info">
+		<id name="id">
+			<column name="id"  length="40"></column>
+			<generator class="org.hibernate.id.UUIDGenerator"></generator>
+		</id>
+		<property name="type" type="java.lang.String" >
+			<column name="type" length="8"></column>
+		</property>
+		<property name="source" type="java.lang.String" >
+			<column name="source" length="20"></column>
+		</property>
+		<property name="title" type="java.lang.String" >
+			<column name="title" length="30"></column>
+		</property>
+		<property name="content" type="java.lang.String" >
+			<column name="content" length="1000"></column>
+		</property>
+		<property name="memo" type="java.lang.String" >
+			<column name="memo" length="100"></column>
+		</property>
+		<property name="creator" type="java.lang.String" >
+			<column name="creator" length="15"></column>
+		</property>
+		<property name="createTime" type="java.sql.Timestamp" >
+			<column name="createTime"></column>
+		</property>
+		<property name="state" type="java.lang.String" length="1">
+			<column name="state" length="16"></column>
+		</property>
+	</class>
+
+</hibernate-mapping>

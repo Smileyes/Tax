@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-9-8 11:26:16 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping package="com.Smileyes.nsfw.complain.entity">
+	<class name="Reply" table="reply" catalog="tax" optimistic-lock="version">
+		<id name="repId" type="string">
+			<column name="repId" length="32" />
+			<generator class="uuid.hex" />
+		</id>
+		<many-to-one name="complain" class="Complain" fetch="select"
+			cascade="save-update,delete">
+			<column name="comId" length="32" not-null="true" />
+		</many-to-one>
+		<property name="repName" type="string">
+			<column name="repName" length="20" not-null="true" />
+		</property>
+		<property name="repDept" type="string">
+			<column name="repDept" length="20" not-null="true" />
+		</property>
+		<property name="repTime" type="timestamp">
+			<column name="repTime" length="19" not-null="true" />
+		</property>
+		<property name="repContent" type="string">
+			<column name="repContent" length="65535" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

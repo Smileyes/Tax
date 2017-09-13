@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-9-1 20:02:51 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="entity.TUser" table="t_user" catalog="power" optimistic-lock="version">
+        <id name="userId" type="string">
+            <column name="user_id" length="40" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TDept" class="entity.TDept" fetch="select">
+            <column name="dept_id" length="40" not-null="true" />
+        </many-to-one>
+        <property name="userName" type="string">
+            <column name="user_name" length="20" not-null="true" />
+        </property>
+        <set name="TRoles" table="user_role" inverse="false" lazy="true" fetch="select">
+            <key>
+                <column name="user_id" length="40" not-null="true" />
+            </key>
+            <many-to-many entity-name="entity.TRole">
+                <column name="role_id" length="40" not-null="true" />
+            </many-to-many>
+        </set>
+        <one-to-one name="TLeader" class="entity.TLeader"></one-to-one>
+    </class>
+</hibernate-mapping>

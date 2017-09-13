@@ -81,7 +81,7 @@ public class ExcelUtil {
 			cell3[5].setCellValue(user.isGender() ? "男" : "女");
 			// 状态
 			cell3[6].setCellValue(
-					user.USER_STATE_VALID.equals(user.getState()) ? "有效" : "无效");
+					User.USER_STATE_VALID.equals(user.getState()) ? "有效" : "无效");
 			// 生日
 			cell3[7].setCellValue(sdf.format(user.getBirthday()));
 			// 邮箱

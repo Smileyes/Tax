@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 2017-9-1 20:02:51 by Hibernate Tools 4.3.5.Final -->
+<hibernate-mapping>
+    <class name="entity.TDept" table="t_dept" catalog="power" optimistic-lock="version">
+        <id name="deptId" type="string">
+            <column name="dept_id" length="40" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="TCompany" class="entity.TCompany" fetch="select">
+            <column name="co_id" length="40" not-null="true" />
+        </many-to-one>
+        <property name="deptName" type="string">
+            <column name="dept_name" length="20" not-null="true" />
+        </property>
+        <set name="TUsers" table="t_user" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dept_id" length="40" not-null="true" />
+            </key>
+            <one-to-many class="entity.TUser" />
+        </set>
+    </class>
+</hibernate-mapping>

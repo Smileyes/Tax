@@ -44,7 +44,10 @@
 		<property name="mappingLocations">
 			<list>
 				<value>classpath:com/Smileyes/test/entity/*.hbm.xml</value>
-				<value>classpath:com/Smileyes/nsfw/user/entity/User.hbm.xml</value>
+				<value>classpath:com/Smileyes/nsfw/user/entity/*.hbm.xml</value>
+				<value>classpath:com/Smileyes/nsfw/role/entity/*.hbm.xml</value>
+				<value>classpath:com/Smileyes/nsfw/info/entity/*.hbm.xml</value>
+				<value>classpath:com/Smileyes/nsfw/complain/entity/*.hbm.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -71,13 +74,17 @@
 		<aop:pointcut expression="bean(*Service)" id="pt" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pt" />
 	</aop:config>
-	<!-- 4.导入各模块的配置文件 -->
-	<import resource="com/Smileyes/test/config/spring-test.xml" />
-	<import resource="com/Smileyes/nsfw/user/config/spring-user.xml" />
-
-	<!-- 5.总配置 -->
+	<!-- 4.总配置 -->
 	<bean class="com.Smileyes.core.dao.impl.BaseDaoImpl" abstract="true"
 		id="baseDao">
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
+	<!-- 5.导入各模块的配置文件 -->
+	<!-- test模块 -->
+	<import resource="com/Smileyes/*/config/*-spring.xml" />
+	<!-- 纳税服务模块 -->
+	<import resource="com/Smileyes/nsfw/*/config/*-spring.xml" />
+	<!-- 测试Quartz任务调度 -->
+	<!-- <import resource="timerAndQuartz/quartz/quartz-spring.xml" /> -->
+
 </beans>

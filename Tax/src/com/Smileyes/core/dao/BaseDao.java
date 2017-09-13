@@ -3,6 +3,11 @@ package com.Smileyes.core.dao;
 import java.io.Serializable;
 import java.util.List;
 
+import org.hibernate.Session;
+
+import com.Smileyes.core.entity.PageResult;
+import com.Smileyes.core.utils.QueryHelper;
+
 /*
  * 核心Dao接口，包含通用的数据的CRUD方法
  * 
@@ -24,4 +29,14 @@ public interface BaseDao<T> {
 
 	// 查询所有
 	public List<T> list();
+
+	// 获得session
+	public Session getSession();
+
+	// 条件查询
+	public List<T> queryByCondition(QueryHelper queryHelper,PageResult pageResult);
+
+	// 查询记录数量
+	public long queryNums(QueryHelper queryHelper);
+
 }

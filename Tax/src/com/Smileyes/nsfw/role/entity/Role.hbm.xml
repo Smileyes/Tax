@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.Smileyes.nsfw.role.entity">
+	<class name="Role" table="role">
+		<id name="id" column="id" length="40">
+			<generator class="org.hibernate.id.UUIDGenerator"></generator>
+		</id>
+		<property name="name" column="name" length="10" type="java.lang.String"
+			unique="true"></property>
+		<property name="state" type="java.lang.String" length="1">
+			<column name="state"></column>
+		</property>
+		<set name="rolePrivileges" lazy="false" inverse="true" cascade="save-update,delete"  table="rolePrivilege">
+			<key column="roleId"></key>
+			<one-to-many class="RolePrivilege" />
+		</set>
+	</class>
+
+</hibernate-mapping>

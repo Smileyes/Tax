@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	<!-- 1.制定任务详情 -->
+	<bean id="dealOldComplain"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 1.1指定目标对象 -->
+		<property name="targetObject" ref="complainAction"></property>
+		<!-- 1.2指定目标方法 -->
+		<property name="targetMethod" value="dealOldComplain"></property>
+		<!-- 1.3指定是否同步 -->
+		<property name="concurrent" value="false"></property>
+	</bean>
+	<!-- 2.指定任务执行触发器 -->
+	<bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<!-- 2.1任务详情 -->
+		<property name="jobDetail" ref="dealOldComplain"></property>
+		<!-- 2.2执行时机 -->
+		<property name="cronExpression" value="59 59 23 L * ?"></property>
+	</bean>
+	<!-- 3.设置调度工厂 -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<ref bean="cronTrigger" />
+		</property>
+	</bean>
+</beans>

@@ -1,6 +1,7 @@
 package com.Smileyes.nsfw.user.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 /*
  * 用户实体类
@@ -22,7 +23,7 @@ public class User {
 	private String email;
 	private String memo;
 	private Date birthday;
-
+	private Set<UserRole> userRoles;
 	// 用户状态
 	public static String USER_STATE_VALID = "1";// 账户有效
 	public static String USER_STATE_INVALID = "0";// 账户被封禁
@@ -121,6 +122,14 @@ public class User {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	public Set<UserRole> getUserRoles() {
+		return userRoles;
+	}
+
+	public void setUserRoles(Set<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 
 }

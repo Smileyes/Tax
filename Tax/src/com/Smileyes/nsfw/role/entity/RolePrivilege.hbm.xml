@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.Smileyes.nsfw.role.entity">
+	<class name="RolePrivilege" table="rolePrivilege">
+		<composite-id >
+			<key-many-to-one name="role" class="Role" lazy="false">
+				<column name="roleId"></column>
+			</key-many-to-one>
+			<key-property name="code" type="java.lang.String" length="10" >
+				<column name="code" ></column>
+			</key-property>
+		</composite-id>
+	</class>
+
+</hibernate-mapping>
