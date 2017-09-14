@@ -17,4 +17,7 @@ public interface ComplainDao extends BaseDao<Complain> {
 	// 添加受理信息
 	void addReply(Reply reply);
 
+	// 查询某年中每个月的投诉数量
+	List<Object[]> groupByMonth(int year);
+
 }

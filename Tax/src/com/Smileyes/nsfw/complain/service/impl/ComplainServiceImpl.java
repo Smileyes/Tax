@@ -1,5 +1,7 @@
 package com.Smileyes.nsfw.complain.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -31,6 +33,9 @@ public class ComplainServiceImpl extends BaseServiceImpl<Complain>
 		this.complainDao.addReply(reply);
 	}
 
-
+	// 投诉统计
+	public List<Object[]>  annualStatic(int year) {
+		return this.complainDao.groupByMonth(year);
+	}
 
 }

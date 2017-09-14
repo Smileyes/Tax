@@ -1,10 +1,17 @@
 package com.Smileyes.nsfw.complain.action;
 
+import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -18,6 +25,8 @@ import com.Smileyes.core.utils.QueryHelper;
 import com.Smileyes.nsfw.complain.entity.Complain;
 import com.Smileyes.nsfw.complain.entity.Reply;
 import com.Smileyes.nsfw.complain.service.ComplainService;
+
+import net.sf.json.JSONObject;
 
 /*
  * 信息ComplainAction
@@ -34,6 +43,7 @@ public class ComplainAction extends BaseAction {
 	private String startTime;
 	private String endTime;
 	private Reply reply;
+	private String year;
 
 	// 分页显示
 	public String listUI() throws Exception {
@@ -114,14 +124,68 @@ public class ComplainAction extends BaseAction {
 
 	// 批量处理该时刻前未处理的信息
 	public void dealOldComplain() throws Exception {
-		QueryHelper qh = new QueryHelper(Complain.class).addCondition("state=?",
-				Complain.UNREPLY, QueryHelper.CONDITIONS_NULL).addCondition(
-						"comTime<=?", new Date(), QueryHelper.CONDITIONS_AND);
+		QueryHelper qh = new QueryHelper(Complain.class)
+				.addCondition("state=?", Complain.UNREPLY, QueryHelper.CONDITIONS_NULL)
+				.addCondition("comTime<=?", new Date(), QueryHelper.CONDITIONS_AND);
 		List<Complain> list = complainService.queryByCondition(qh);
 		for (Complain comp : list) {
 			comp.setState(Complain.OUTOFDATE);
 			complainService.update(comp);
 		}
+	}
+
+	// 投诉信息统计页面
+	public String annualStatisticChartUI() throws Exception {
+		// 新建年份集合
+		Calendar c = Calendar.getInstance();
+		int year = c.get(Calendar.YEAR);
+		List<Integer> yearList = new ArrayList<Integer>();
+		for (int i = 0; i < 5; i++) {
+			yearList.add(year - i);
+		}
+		Map<String, Object> request = ServletActionContext.getContext().getContextMap();
+		request.put("year", year);
+		request.put("yearList", yearList);
+		return "annualStatisticChartUI";
+	}
+
+	// 投诉信息统计
+	public void annualStatisticChart() throws Exception {
+		System.out.println("连接");
+		JSONObject json = new JSONObject();
+		if (StringUtils.isNotBlank(year)) {
+			json.put("msg", "success");
+			int yearNum = Integer.parseInt(year);
+			// 查询结果
+			List<Object[]> list = complainService.annualStatic(yearNum);
+			// 返回给浏览器的结果集合
+			List<HashMap<String, Object>> result = new ArrayList<HashMap<String, Object>>();
+			HashMap<String, Object> resultMap = null;
+			// 查询结果不为空
+			if (list != null) {
+				// 遍历查询结果
+				for (int i = 0; i < list.size(); i++) {
+					resultMap = new HashMap<String, Object>();
+					resultMap.put("label", i + 1 + "");
+					if (list.get(i)[1] == null) {
+						resultMap.put("value", list.get(i)[1]);
+					}
+					resultMap.put("color", "008ee4");
+					resultMap.put("stepSkipped", false);
+					resultMap.put("appliedSmartLabel", true);
+					result.add(resultMap);
+				}
+			}
+			json.put("result", result);
+		} else {
+			json.put("msg", "error");
+		}
+		HttpServletResponse response = ServletActionContext.getResponse();
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter pt = response.getWriter();
+		System.out.println(json.toString());
+		pt.write(json.toString());
+		pt.close();
 	}
 
 	public void setComplain(Complain complain) {
@@ -150,6 +214,14 @@ public class ComplainAction extends BaseAction {
 
 	public void setReply(Reply reply) {
 		this.reply = reply;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
 	}
 
 }

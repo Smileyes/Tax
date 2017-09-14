@@ -44,6 +44,7 @@ public class HomeAction extends ActionSupport {
 	private PageResult infoPageResult;
 	private Complain complain;
 	private Map<String, Object> result;
+	private Info info;
 
 	/*
 	 * 返回主页
@@ -55,7 +56,7 @@ public class HomeAction extends ActionSupport {
 		if (comPageResult == null) {
 			comPageResult = new PageResult(1);
 		}
-		comPageResult.setPageSize(3);
+		comPageResult.setPageSize(8);
 		QueryHelper queryHelper = new QueryHelper(Complain.class)
 				.addOrderByProperty("state", QueryHelper.ORDER_ASC)
 				.addOrderByProperty("comTime", QueryHelper.ORDER_DSEC)
@@ -65,17 +66,17 @@ public class HomeAction extends ActionSupport {
 		// 获得投诉状态集合
 		ServletActionContext.getContext().getContextMap().put("complainStateMap",
 				Complain.COM_STATE_MAP);
+
 		// 获得信息集合
 		if (infoPageResult == null) {
 			infoPageResult = new PageResult(1);
 		}
-		comPageResult.setPageSize(3);
 		QueryHelper qh = new QueryHelper(Info.class)
 				.addOrderByProperty("state", QueryHelper.ORDER_ASC)
 				.addOrderByProperty("createTime", QueryHelper.ORDER_DSEC).addCondition(
 						"state=?", Info.INFO_VALID_STATE, QueryHelper.CONDITIONS_NULL);
 		// 获得前几条信息
-		infoPageResult.setPageSize(3);
+		infoPageResult.setPageSize(5);
 		infoPageResult = this.complainService.getPageResult(qh, infoPageResult);
 		// 获得所有信息分类的集合
 		ServletActionContext.getContext().getContextMap().put("infoTypeMap",
@@ -149,6 +150,30 @@ public class HomeAction extends ActionSupport {
 		}
 	}
 
+	// 查看投诉详情
+	public String complainViewUI() throws Exception {
+		if (complain != null && StringUtils.isNoneBlank(complain.getComId())) {
+			complain = complainService.findById(complain.getComId());
+		}
+		// 获得投诉状态集合
+		ServletActionContext.getContext().getContextMap().put("complainStateMap",
+				Complain.COM_STATE_MAP);
+		return "complainViewUI";
+
+	}
+
+	// 查看信息详情
+	public String infoViewUI() throws Exception {
+		if (info != null && StringUtils.isNoneBlank(info.getId())) {
+			info = infoService.findById(info.getId());
+		}
+		// 获得所有信息分类的集合
+		ServletActionContext.getContext().getContextMap().put("infoTypeMap",
+				Info.INFO_TYPE_MAP);
+		return "infoViewUI";
+
+	}
+
 	public Complain getComplain() {
 		return complain;
 	}
@@ -179,6 +204,14 @@ public class HomeAction extends ActionSupport {
 
 	public void setInfoPageResult(PageResult infoPageResult) {
 		this.infoPageResult = infoPageResult;
+	}
+
+	public Info getInfo() {
+		return info;
+	}
+
+	public void setInfo(Info info) {
+		this.info = info;
 	}
 
 }

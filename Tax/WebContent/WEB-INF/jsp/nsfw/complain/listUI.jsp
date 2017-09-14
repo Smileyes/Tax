@@ -31,6 +31,11 @@
 			document.forms[0].submit();
 		}
 	}
+	//统计
+	function doAnnualStatistic() {
+		document.forms[0].action = "complain_annualStatisticChartUI.action";
+		document.forms[0].submit();
+	}
 </script>
 <body class="rightBody">
 	<form name="form1" action="" method="post">

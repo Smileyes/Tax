@@ -1,8 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%
-String path = request.getContextPath();
-String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName()
+			+ ":" + request.getServerPort() + path + "/";
 %>
 
 <html>
@@ -30,9 +31,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<!-- 时间、作者 -->
 		<div
 			style="text-align: center; width: 100%; color: #ccc; font-size: 12px;">
-			信息分类：xx分类&nbsp;&nbsp;&nbsp;&nbsp; 创建人：xxx&nbsp;&nbsp;&nbsp;&nbsp;
-			创建时间：2014-09-17</div>
-		<div style="text-align: center; width: 100%; padding: 8px;">内容</div>
+			信息分类：
+			<s:property value="#infoTypeMap[info.type]" />
+			&nbsp;&nbsp;&nbsp;&nbsp; 创建人：
+			<s:property value="info.creator" />
+			&nbsp;&nbsp;&nbsp;&nbsp; 创建时间：
+			<s:date name="info.createTime" format="yyyy-MM-dd HH:mm"/>
+		</div>
+		<div style="text-align: center; width: 100%; padding: 8px;">
+			<s:property value="info.content" escape="false"/>
+		</div>
+		<input type="button" value="关闭" onclick="javaScript:window.close()">
+
 	</div>
 
 </body>

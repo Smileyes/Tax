@@ -153,7 +153,9 @@
 						<td width="150px">创建时间</td>
 					</tr>
 					<s:iterator value="infoPageResult.items" var="sta">
-						<tr align="center">
+						<tr align="center"  onmouseover="mouseOver(this)"
+							onmouseout="mouseOut(this)"
+							onclick="infoViewUI('<s:property value="id" />')">
 							<td height="23"><s:property value="title" /></td>
 							<td width="180px"><s:property value="#infoTypeMap[type]" /></td>
 							<td width="180px"><s:property value="creator" /></td>
@@ -179,51 +181,26 @@
 					</div>
 				</div>
 				<table width="98%" border="0" align="center">
-					<tr align="center" >
-						<td height="23" >投诉标题</td>
-						<td width="180px" >受理状态</td>
-						<td width="180px" >是否匿名投诉</td>
-						<td width="180px" >投诉时间</td>
+					<tr align="center">
+						<td height="23">投诉标题</td>
+						<td width="180px">受理状态</td>
+						<td width="180px">是否匿名投诉</td>
+						<td width="180px">投诉时间</td>
 					</tr>
 					<s:iterator value="comPageResult.items" var="sta">
-						<tr align="center">
+						<tr align="center" onmouseover="mouseOver(this)"
+							onmouseout="mouseOut(this)"
+							onclick="complainViewUI('<s:property value="comId" />')">
 							<td height="23"><s:property value="comTitle" /></td>
-							<td width="180px"><s:property value="#complainStateMap[state]" /></td>
+							<td width="180px"><s:property
+									value="#complainStateMap[state]" /></td>
 							<td width="180px"><s:property value="isNm==1?'是':'否'" /></td>
 							<td width="180px"><s:date name="comTime"
 									format="yyyy-MM-dd HH:mm" /></td>
 						</tr>
 
 					</s:iterator>
-
 				</table>
-				<s:if test="comPageResult.totalPage>0">
-					<div class="c_pate" style="margin-top: 5px;">
-						<table width="100%" class="pageDown" border="0" cellspacing="0"
-							cellpadding="0">
-							<tr>
-								<td align="right">总共<s:property
-										value="comPageResult.totalNum" />条记录，当前第<s:property
-										value="comPageResult.pageNum" /> 页，共 <s:property
-										value="comPageResult.totalPage" /> 页 &nbsp;&nbsp; <s:if
-										test="comPageResult.pageNum!=1">
-										<a
-											href="javascript:doGoPage('<s:property value="comPageResult.pageNum-1"/>')">上一页</a>&nbsp;&nbsp;<a
-											href="#">
-									</s:if> <s:if test="comPageResult.pageNum!=comPageResult.totalPage">
-										<a
-											href="javascript:doGoPage('<s:property value="comPageResult.pageNum+1"/>')">下一页</a>&nbsp;&nbsp;<a
-											href="#">
-									</s:if> 到&nbsp;<input type="text" style="width: 30px;"
-									onkeypress="if(event.keyCode == 13){doGoPage(this.value,<s:property value="comPageResult.totalPage"/>);}"
-									min="1" max=""
-									value="<s:property value='comPageResult.pageNum'/>" />
-									&nbsp;&nbsp;
-								</td>
-							</tr>
-						</table>
-					</div>
-				</s:if>
 			</div>
 
 			<div class="lc_grzx1">
@@ -244,4 +221,25 @@
 	<div class="foot">版权所有©国税局 2014</div>
 	<!-- }尾部 -->
 </body>
+<script type="text/javascript" src="${ctx}/js/jquery/jquery.min.js"></script>
+<script type="text/javascript">
+	//鼠标覆盖
+	function mouseOver(trTag) {
+		var $tr = $(trTag);
+		trTag.style.backgroundColor = '#ccc';
+	}
+	//鼠标离开
+	function mouseOut(trTag) {
+		var $tr = $(trTag);
+		trTag.style.backgroundColor = '';
+	}
+	//投诉详情
+	function complainViewUI(id) {
+		window.open("home_complainViewUI.action?complain.comId=" + id,"_blank");
+	}
+	//信息详情
+	function infoViewUI(id) {
+		window.open("home_infoViewUI.action?info.id=" + id,"_blank");
+	}
+</script>
 </html>
